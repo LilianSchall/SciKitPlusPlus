@@ -1,3 +1,3 @@
 #pragma once
 
-int one(void);
+#include "tensor/tensor.hh"
