@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(sk-plusplus LANGUAGES CXX)
+project(scikit++ LANGUAGES CXX)
 
 find_package(benchmark)
 find_package(GTest)
