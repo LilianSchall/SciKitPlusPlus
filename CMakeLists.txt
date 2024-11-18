@@ -9,7 +9,7 @@ set(CXX_STANDARD 20)
 
 # define sk-plusplus target
 add_library(${PROJECT_NAME} SHARED)
-add_subdirectory(sk-plusplus/)
+add_subdirectory(sk-plusplus/sk-plusplus/)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror -pedantic -g)
 target_include_directories(${PROJECT_NAME} PUBLIC sk-plusplus/)
 

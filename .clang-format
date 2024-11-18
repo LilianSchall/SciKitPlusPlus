@@ -1,0 +1,28 @@
+﻿---
+BasedOnStyle: LLVM
+AlignAfterOpenBracket: AlwaysBreak
+AlignOperands: 'true'
+AlignTrailingComments: 'true'
+AllowAllArgumentsOnNextLine: 'false'
+AllowAllConstructorInitializersOnNextLine: 'false'
+AllowAllParametersOfDeclarationOnNextLine: 'false'
+AllowShortBlocksOnASingleLine: 'true'
+AllowShortCaseLabelsOnASingleLine: 'false'
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: 'false'
+AlwaysBreakAfterDefinitionReturnType: None
+BinPackArguments: 'false'
+BinPackParameters: 'false'
+BreakBeforeBraces: Allman
+BreakBeforeTernaryOperators: 'true'
+BreakConstructorInitializers: AfterColon
+ColumnLimit: '80'
+Cpp11BracedListStyle: 'false'
+IndentCaseLabels: 'true'
+Language: Cpp
+SortIncludes: 'true'
+Standard: Cpp11
+IndentWidth: '4'
+
+...
