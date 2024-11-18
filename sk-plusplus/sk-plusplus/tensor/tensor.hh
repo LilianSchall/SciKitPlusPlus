@@ -10,6 +10,13 @@ class Tensor
   public:
     Tensor(std::vector<float> data, std::vector<size_t> shape);
 
+    std::vector<size_t> create_iter(void);
+
+    static Tensor ones(std::vector<size_t> shape);
+    static Tensor zeroes(std::vector<size_t> shape);
+
+    float& operator[](const std::vector<size_t>& indices);
+
     Tensor operator+(const Tensor &other);
     Tensor &operator+=(const Tensor &other);
 
@@ -21,11 +28,18 @@ class Tensor
     friend Tensor operator+(const int lhs, Tensor &rhs);
     Tensor &operator+=(const int other);
 
-    float& operator[](const std::vector<size_t>& indices);
-    std::vector<size_t> create_iter(void);
+    Tensor operator*(const Tensor &other);
+    Tensor &operator*=(const Tensor &other);
 
-    static Tensor ones(std::vector<size_t> shape);
-    static Tensor zeroes(std::vector<size_t> shape);
+    friend Tensor operator*(Tensor &lhs, const float rhs);
+    friend Tensor operator*(const float lhs, Tensor &rhs);
+    Tensor &operator*=(const float other);
+
+    friend Tensor operator*(Tensor &lhs, const int rhs);
+    friend Tensor operator*(const int lhs, Tensor &rhs);
+    Tensor &operator*=(const int other);
+
+    Tensor hadamard_dot(const Tensor &other);
 
   public:
     std::vector<size_t> shape;

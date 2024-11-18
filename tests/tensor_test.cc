@@ -82,3 +82,47 @@ TEST(TensorTest, TensorAddTensor)
         for (; iter[1] < t3.shape[1]; iter[1]++)
             EXPECT_EQ(t3[iter], 2);
 }
+
+TEST(TensorTest, TensorMulInt)
+{
+    sk::Tensor t = sk::Tensor::ones({ 10, 10 });
+
+    for (size_t i = 0; i < 10; i++)
+        t *= 2;
+
+    sk::Tensor another_t = t * 2;
+
+    std::vector<size_t> iter = t.create_iter();
+
+    for (; iter[0] < t.shape[0]; iter[0]++)
+        for (; iter[1] < t.shape[1]; iter[1]++)
+            EXPECT_EQ(t[iter], 1024);
+
+    iter = another_t.create_iter();
+
+    for (; iter[0] < another_t.shape[0]; iter[0]++)
+        for (; iter[1] < another_t.shape[1]; iter[1]++)
+            EXPECT_EQ(another_t[iter], 2048);
+}
+
+TEST(TensorTest, TensorMulFloat)
+{
+    sk::Tensor t = sk::Tensor::ones({ 10, 10 });
+
+    for (size_t i = 0; i < 10; i++)
+        t *= 2.0f;
+
+    sk::Tensor another_t = t * 2.0f;
+
+    std::vector<size_t> iter = t.create_iter();
+
+    for (; iter[0] < t.shape[0]; iter[0]++)
+        for (; iter[1] < t.shape[1]; iter[1]++)
+            EXPECT_EQ(t[iter], 1024);
+
+    iter = another_t.create_iter();
+
+    for (; iter[0] < another_t.shape[0]; iter[0]++)
+        for (; iter[1] < another_t.shape[1]; iter[1]++)
+            EXPECT_EQ(another_t[iter], 2048);
+}
