@@ -41,6 +41,8 @@ class Tensor
 
     Tensor hadamard_dot(const Tensor &other);
 
+    friend Tensor vec_dot(const Tensor &a, const Tensor &b);
+
   public:
     std::vector<size_t> shape;
 

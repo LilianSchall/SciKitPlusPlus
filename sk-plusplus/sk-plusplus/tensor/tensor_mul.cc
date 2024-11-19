@@ -22,20 +22,52 @@ sk::Tensor sk::Tensor::hadamard_dot(const Tensor &other)
     return res;
 }
 
+sk::Tensor vec_dot(const Tensor &a, const Tensor &b)
+{
+    assert(a.shape[0] == b.shape[0]);
+    float res = 0;
+
+    for (size_t i = 0; i < a.shape[0]; i++)
+        res += a._data[i] * b._data[i];
+
+    return Tensor({res}, {});
+}
+
+sk::Tensor mat_dot(const Tensor &a, const Tensor &b)
+{
+
+}
+
+sk::Tensor matmul(const Tensor &a, const Tensor &b)
+{
+    size_t dim_a = a.shape.size();
+    size_t dim_b = b.shape.size();
+    if (dim_a == dim_b)
+    {
+        if (dim_a == 1)
+            return vec_dot(a, b);
+        if (dim_a == 2)
+            return mat_dot(a, b);
+    }
+}
+
 sk::Tensor sk::Tensor::operator*(const Tensor &other)
 {
     // TODO: implement matmul
     assert(this->shape == other.shape);
 
-    sk::Tensor res = sk::Tensor::zeroes(other.shape);
-
-    return res;
+    return matmul(*this, other);
 }
 
 sk::Tensor &sk::Tensor::operator*=(const Tensor &other)
 {
     // TODO: implement matmul
     assert(this->shape == other.shape);
+
+    sk::Tensor res = matmul(*this, other);
+
+    this->_data = res._data;
+    this->shape = res.shape;
 
     return *this;
 }
