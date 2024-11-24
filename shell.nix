@@ -9,6 +9,7 @@ pkgs.mkShell {
       gnupg libGL libGLU zlib
       m4 utillinux
       pngpp procps tbb unzip
+      openblas
   ];
   shellHook = with pkgs; ''
     #export EXTRA_CCFLAGS="-I/usr/include $EXTRA_CCFLAGS"

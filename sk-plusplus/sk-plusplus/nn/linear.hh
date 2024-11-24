@@ -12,8 +12,8 @@ class Linear : sk::nn::Module
     Linear(sk::Tensor weights, sk::Tensor bias) = delete;
     Linear(size_t input_size, size_t output_size);
 
-    virtual sk::Tensor forward(sk::Tensor &input) override;
-    virtual sk::Tensor backward(sk::Tensor &input) override;
+    sk::Tensor forward(sk::Tensor &input) override;
+    // sk::Tensor backward(sk::Tensor &input) override;
 
   private:
     sk::Tensor _weights;

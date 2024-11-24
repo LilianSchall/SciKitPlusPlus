@@ -4,14 +4,25 @@ project(scikit++ LANGUAGES CXX)
 
 find_package(benchmark)
 find_package(GTest)
+set(BLA_VENDER OpenBLAS)
+find_package(BLAS REQUIRED)
 
-set(CXX_STANDARD 20)
+if (BLAS_FOUND)
+    find_path(BLAS_INCLUDE_DIRS cblas.h
+        /usr/include
+        /usr/local/include
+        $ENV{BLAS_HOME}/include
+    )
+endif(BLAS_FOUND)
+
+set(CXX_STANDARD 23)
 
 # define sk-plusplus target
 add_library(${PROJECT_NAME} SHARED)
 add_subdirectory(sk-plusplus/sk-plusplus/)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror -pedantic -g)
-target_include_directories(${PROJECT_NAME} PUBLIC sk-plusplus/)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic -g)
+target_include_directories(${PROJECT_NAME} PUBLIC sk-plusplus/ ${BLAS_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${BLAS_LIBRARIES})
 
 # Download dependency for benchmarking target if needed
 if(NOT benchmark_FOUND)
