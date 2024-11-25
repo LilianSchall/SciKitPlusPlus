@@ -9,7 +9,7 @@ Software Engineering students at EPITA.
 
 ## What you need to do to run the project
 
-This project is a CMake project with Google Benchmark and Google test as
+This project is a CMake project with OpenBLAS, Google Benchmark and Google test as
 required libraries.
 
 The CMakeLists.txt located in the root folder checks if the two Google
@@ -22,6 +22,13 @@ needed, your runtime environment should contain:
 - a cxx compiler (e.g. g++)
 - cmake
 - gnumake
+
+OpenBLAS needs to be installed locally through your favorite package manager.
+For example, in Debian based distributions, please execute the following
+command:
+```shell
+sudo apt-get install libopenblas-dev
+```
 
 The setup of the build folder can simply be triggered using the following
 command:

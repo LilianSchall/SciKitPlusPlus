@@ -9,8 +9,8 @@ namespace sk::nn
 class Linear : sk::nn::Module
 {
   public:
-    Linear(sk::Tensor weights, sk::Tensor bias) = delete;
-    Linear(size_t input_size, size_t output_size);
+    explicit Linear(sk::Tensor weights, sk::Tensor bias);
+    explicit Linear(size_t input_size, size_t output_size);
 
     sk::Tensor forward(sk::Tensor &input) override;
     // sk::Tensor backward(sk::Tensor &input) override;

@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
 
 target_sources(${PROJECT_NAME} PRIVATE
-    linear.cc
+    mse_loss.cc
 )
-
-add_subdirectory(loss/)
