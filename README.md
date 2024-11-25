@@ -26,25 +26,25 @@ needed, your runtime environment should contain:
 OpenBLAS needs to be installed locally through your favorite package manager.
 For example, in Debian based distributions, please execute the following
 command:
-```shell
+```bash
 sudo apt-get install libopenblas-dev
 ```
 
 The setup of the build folder can simply be triggered using the following
 command:
-```shell
-    make 
+```bash
+make 
 ```
 
 Afterwards, you need to actually compile the project.
 This can be done through the following command:
-```shell
-    cd build;
-    make -j4;
+```bash
+cd build;
+make -j4;
 ```
 
 To run the test program, simply run the following command:
-```shell
+```bash
 ./test
 ```
 
