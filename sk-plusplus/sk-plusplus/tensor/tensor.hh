@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <concepts>
+#include <functional>
 #include <type_traits>
 #include <vector>
 
@@ -74,7 +75,9 @@ class Tensor
     Tensor hadamard_dot(const Tensor &other);
 
     const std::vector<float> &as_array() const;
+
     Tensor &reshape(std::vector<size_t> shape);
+    Tensor &map(std::function<float(float)> func);
 
   public:
     std::vector<size_t> shape;
@@ -89,5 +92,5 @@ namespace sk::tensor
 {
 sk::Tensor ones(std::vector<size_t> shape);
 sk::Tensor zeroes(std::vector<size_t> shape);
-sk::Tensor arange(int max, int min=0, int step=1);
+sk::Tensor arange(int max, int min = 0, int step = 1);
 } // namespace sk::tensor

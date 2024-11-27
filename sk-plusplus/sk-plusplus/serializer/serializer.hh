@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "sk-plusplus/tensor/tensor.hh"
-
 namespace sk::serializer
 {
 

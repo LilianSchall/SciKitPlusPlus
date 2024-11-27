@@ -31,6 +31,13 @@ Tensor &Tensor::reshape(std::vector<size_t> shape)
     return *this;
 }
 
+Tensor &Tensor::map(std::function<float(float)> func)
+{
+    for (size_t i = 0; i < this->_data.size(); i++)
+        this->_data[i] = func(this->_data[i]);
+    return *this;
+}
+
 } // namespace sk
 
 sk::Tensor tensor_fill(std::vector<size_t> shape, float value)

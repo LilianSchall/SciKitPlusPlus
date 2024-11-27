@@ -17,10 +17,11 @@ Linear::Linear(size_t input_size, size_t output_size) :
 
 sk::Tensor Linear::forward(sk::Tensor &input)
 {
-    sk::Tensor res = this->_weights * input;
+    sk::Tensor res = input * this->_weights;
 
     res += this->_bias;
 
+    // return sk::tensor::argmax(res, axis=1);
     return res;
 }
 } // namespace sk::nn
