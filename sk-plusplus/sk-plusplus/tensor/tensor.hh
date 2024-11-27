@@ -52,6 +52,17 @@ class Tensor
     friend Tensor operator+(const int lhs, Tensor &rhs);
     Tensor &operator+=(const int other);
 
+    Tensor operator-(const Tensor &other);
+    Tensor &operator-=(const Tensor &other);
+
+    friend Tensor operator-(Tensor &lhs, const float rhs);
+    friend Tensor operator-(const float lhs, Tensor &rhs);
+    Tensor &operator-=(const float other);
+
+    friend Tensor operator-(Tensor &lhs, const int rhs);
+    friend Tensor operator-(const int lhs, Tensor &rhs);
+    Tensor &operator-=(const int other);
+
     Tensor operator*(Tensor &other);
     Tensor &operator*=(Tensor &other);
 
