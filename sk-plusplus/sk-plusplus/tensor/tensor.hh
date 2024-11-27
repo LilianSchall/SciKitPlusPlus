@@ -13,9 +13,6 @@ class Tensor
   public:
     Tensor(std::vector<float> data, std::vector<size_t> shape);
 
-    static Tensor ones(std::vector<size_t> shape);
-    static Tensor zeroes(std::vector<size_t> shape);
-
     template <typename... Ints> float &operator()(Ints... indices)
     {
 
@@ -32,10 +29,10 @@ class Tensor
 
         size_t metric = 1;
 
-        for (size_t i = v.size() - 1; i > 0; i--)
+        for (size_t i = v.size(); i > 0; i--)
         {
-            index += metric * v[i];
-            metric *= this->shape[i];
+            index += metric * v[i - 1];
+            metric *= this->shape[i - 1];
         }
 
         return this->_data[index];
@@ -76,22 +73,8 @@ class Tensor
 
     Tensor hadamard_dot(const Tensor &other);
 
-    friend Tensor vec_dot(const Tensor &a, const Tensor &b);
-    friend Tensor mat_dot(
-        const Tensor &a,
-        const Tensor &b,
-        const size_t a_begin,
-        const size_t b_begin,
-        const size_t m,
-        const size_t n,
-        const size_t k);
-    friend Tensor mat_vec_dot(
-        const Tensor &a,
-        const Tensor &b,
-        const size_t a_begin,
-        const size_t b_begin,
-        const size_t height_a,
-        const size_t width_a);
+    const std::vector<float> &as_array() const;
+    Tensor &reshape(std::vector<size_t> shape);
 
   public:
     std::vector<size_t> shape;
@@ -101,3 +84,10 @@ class Tensor
 };
 
 } // namespace sk
+
+namespace sk::tensor
+{
+sk::Tensor ones(std::vector<size_t> shape);
+sk::Tensor zeroes(std::vector<size_t> shape);
+sk::Tensor arange(int max, int min=0, int step=1);
+} // namespace sk::tensor

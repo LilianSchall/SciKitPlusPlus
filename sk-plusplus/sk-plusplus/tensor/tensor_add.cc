@@ -10,7 +10,7 @@ sk::Tensor sk::Tensor::operator+(const Tensor &other)
 {
     assert(this->shape == other.shape);
 
-    sk::Tensor res = sk::Tensor::zeroes(other.shape);
+    sk::Tensor res = sk::tensor::zeroes(other.shape);
 
     std::transform(
         this->_data.begin(),
@@ -38,7 +38,7 @@ sk::Tensor &sk::Tensor::operator+=(const Tensor &other)
 
 sk::Tensor operator+(sk::Tensor &lhs, float rhs)
 {
-    sk::Tensor res = sk::Tensor::zeroes(lhs.shape);
+    sk::Tensor res = sk::tensor::zeroes(lhs.shape);
 
     std::transform(
         lhs._data.begin(),
@@ -51,7 +51,7 @@ sk::Tensor operator+(sk::Tensor &lhs, float rhs)
 
 sk::Tensor operator+(float lhs, sk::Tensor &rhs)
 {
-    sk::Tensor res = sk::Tensor::zeroes(rhs.shape);
+    sk::Tensor res = sk::tensor::zeroes(rhs.shape);
 
     std::transform(
         rhs._data.begin(),
