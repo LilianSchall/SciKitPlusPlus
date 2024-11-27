@@ -5,7 +5,10 @@ namespace sk::nn::loss
 
 sk::Tensor MSELoss::forward(sk::Tensor &target, sk::Tensor &prediction)
 {
-    // TODO: compute MSE
-    return Tensor::zeroes({ 1 });
+    sk::Tensor loss = target - prediction;
+
+    loss *= loss;
+
+    return loss;
 }
 } // namespace sk::nn::loss
