@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <sk-plusplus/tensor/tensor.hh>
-#include <sk-plusplus/nn/loss/loss.hh>
+#include <sk-plusplus/nn/loss/mse_loss.hh>
 
 TEST(MseTest, PerfectLoss)
 {
