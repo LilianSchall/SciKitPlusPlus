@@ -9,6 +9,8 @@ TEST(TensorSerializerTest, SerializeDeserialize)
 
     t.reshape({10, 10});
 
+    t += 2.5f;
+
     sk::serializer::TensorSerializer serializer;
 
     const std::string filepath = "test.dat";
@@ -23,5 +25,5 @@ TEST(TensorSerializerTest, SerializeDeserialize)
 
     for (size_t i = 0; i < result.shape[0]; i++)
         for (size_t j = 0; j < result.shape[1]; j++)
-            EXPECT_EQ(result(i, j), i * result.shape[1] + j);
+            EXPECT_EQ(result(i, j), i * result.shape[1] + j + 2.5f);
 }

@@ -1,5 +1,6 @@
 #include "linear.hh"
 #include <vector>
+#include <iostream>
 
 namespace sk::nn
 {
@@ -18,6 +19,8 @@ Linear::Linear(size_t input_size, size_t output_size) :
 sk::Tensor Linear::forward(sk::Tensor &input)
 {
     sk::Tensor res = input * this->_weights;
+
+    std::cout << res.shape[0] << "," << res.shape[1] << std::endl;
 
     res += this->_bias;
 

@@ -54,7 +54,7 @@ sk::Tensor TensorSerializer::deserialize(const std::string &filepath)
     if (error)
     {
         file.close();
-        throw std::invalid_argument("File structure wrong");
+        throw std::invalid_argument("Could not read shape size: " + filepath);
     }
 
     std::vector<size_t> shape;
@@ -71,7 +71,7 @@ sk::Tensor TensorSerializer::deserialize(const std::string &filepath)
     if (error)
     {
         file.close();
-        throw std::invalid_argument("File structure wrong");
+        throw std::invalid_argument("Could not read shape: " + filepath);
     }
 
     std::vector<float> values;
@@ -85,7 +85,7 @@ sk::Tensor TensorSerializer::deserialize(const std::string &filepath)
     if (error)
     {
         file.close();
-        throw std::invalid_argument("File structure wrong");
+        throw std::invalid_argument("Could not read data: " + filepath);
     }
 
     return sk::Tensor{ values, shape };

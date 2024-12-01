@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cassert>
-#include <concepts>
 #include <functional>
+#include <iostream>
 #include <type_traits>
 #include <vector>
 
@@ -78,6 +78,7 @@ class Tensor
 
     Tensor &reshape(std::vector<size_t> shape);
     Tensor &map(std::function<float(float)> func);
+    Tensor &transpose(void);
 
   public:
     std::vector<size_t> shape;
@@ -93,4 +94,8 @@ namespace sk::tensor
 sk::Tensor ones(std::vector<size_t> shape);
 sk::Tensor zeroes(std::vector<size_t> shape);
 sk::Tensor arange(int max, int min = 0, int step = 1);
+void pretty_print(const sk::Tensor &t, std::ostream &out = std::cout);
+
 } // namespace sk::tensor
+
+std::ostream &operator<<(std::ostream &out, const sk::Tensor &t);

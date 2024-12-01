@@ -8,32 +8,71 @@ namespace sk
 
 sk::Tensor sk::Tensor::operator+(const Tensor &other)
 {
-    assert(this->shape == other.shape);
-
     sk::Tensor res = sk::tensor::zeroes(other.shape);
 
-    std::transform(
-        this->_data.begin(),
-        this->_data.end(),
-        other._data.begin(),
-        res._data.begin(),
-        std::plus<float>{});
+    if (this->shape == other.shape)
+    {
+        std::transform(
+            this->_data.begin(),
+            this->_data.end(),
+            other._data.begin(),
+            res._data.begin(),
+            std::plus<float>{});
 
-    return res;
+        return res;
+    }
+
+    // temporary, just to be able to broadcast row vector with matrix
+    if (this->shape[-1] == other.shape[-1] && this->shape.size() == 2 &&
+        other.shape.size() == 1)
+    {
+        for (size_t i = 0; i < this->shape[0]; i++)
+        {
+            std::transform(
+                this->_data.begin() + i * this->shape[1],
+                this->_data.begin() + (i + 1) * this->shape[1],
+                other._data.begin(),
+                res._data.begin() + i * res.shape[1],
+                std::plus<float>{});
+        }
+        return res;
+    }
+
+    assert(false && "Cannot broadcast tensors for addition");
 }
 
 sk::Tensor &sk::Tensor::operator+=(const Tensor &other)
 {
-    assert(this->shape == other.shape);
+    if (this->shape == other.shape)
+    {
+        std::transform(
+            this->_data.begin(),
+            this->_data.end(),
+            other._data.begin(),
+            this->_data.begin(),
+            std::plus<float>{});
 
-    std::transform(
-        this->_data.begin(),
-        this->_data.end(),
-        other._data.begin(),
-        this->_data.begin(),
-        std::plus<float>{});
+        return *this;
+    }
 
-    return *this;
+    // temporary, just to be able to broadcast row vector with matrix
+    if (this->shape[-1] == other.shape[-1] && this->shape.size() == 2 &&
+        other.shape.size() == 1)
+    {
+        for (size_t i = 0; i < this->shape[0]; i++)
+        {
+            std::transform(
+                this->_data.begin() + i * this->shape[1],
+                this->_data.begin() + (i + 1) * this->shape[1],
+                other._data.begin(),
+                this->_data.begin() + i * this->shape[1],
+                std::plus<float>{});
+        }
+
+        return *this;
+    }
+
+    assert(false && "Cannot broadcast tensors for addition");
 }
 
 sk::Tensor operator+(sk::Tensor &lhs, float rhs)

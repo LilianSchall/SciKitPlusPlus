@@ -48,7 +48,11 @@ TEST(TensorTest, TensorRangeReshape)
 {
     sk::Tensor t = sk::tensor::arange(100);
 
+    std::cout << t << std::endl;
+
     t.reshape({10, 10});
+
+    std::cout << t << std::endl;
 
     for (size_t i = 0; i < t.shape[0]; i++)
         for (size_t j = 0; j < t.shape[1]; j++)

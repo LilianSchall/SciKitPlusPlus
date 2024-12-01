@@ -50,3 +50,15 @@ TEST(TensorTest, TensorAddTensor)
         for (size_t j = 0; j < t3.shape[1]; j++)
             EXPECT_EQ(t3(i, j), 2);
 }
+
+TEST(TensorTest, TensorBroadcastAddTensor)
+{
+    sk::Tensor t1 = sk::tensor::ones({ 10, 10 });
+    sk::Tensor t2 = sk::tensor::arange(10);
+
+    sk::Tensor t3 = t1 + t2;
+
+    for (size_t i = 0; i < t3.shape[0]; i++)
+        for (size_t j = 0; j < t3.shape[1]; j++)
+            EXPECT_EQ(t3(i, j), 1 + j);
+}
