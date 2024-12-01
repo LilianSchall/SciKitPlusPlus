@@ -58,3 +58,13 @@ TEST(TensorTest, TensorRangeReshape)
         for (size_t j = 0; j < t.shape[1]; j++)
             EXPECT_EQ(t(i, j), i * t.shape[1] + j);
 }
+
+TEST(TensorTest, TensorTranspose)
+{
+    sk::Tensor t = sk::tensor::arange(4).reshape({2, 2}).transpose();
+
+    EXPECT_EQ(t(0,0), 0);
+    EXPECT_EQ(t(0,1), 2);
+    EXPECT_EQ(t(1,0), 1);
+    EXPECT_EQ(t(1,1), 3);
+}

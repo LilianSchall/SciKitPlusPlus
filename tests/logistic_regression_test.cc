@@ -26,8 +26,12 @@ TEST(LogisticRegressionTest, LoadModel)
     EXPECT_EQ(w.shape.size(), 2);
     EXPECT_EQ(w.shape[0], 3);
     EXPECT_EQ(w.shape[1], 4);
+
+    std::cout << "Before transpose:\n" << w << std::endl;
     
     w.transpose();
+
+    std::cout << "After transpose:\n" << w << std::endl;
 
     EXPECT_EQ(w.shape.size(), 2);
     EXPECT_EQ(w.shape[0], 4);
@@ -41,4 +45,6 @@ TEST(LogisticRegressionTest, LoadModel)
     sk::nn::LogisticRegression clf{w, b};
 
     sk::Tensor pred = clf.forward(X);
+
+    std::cout << "pred: " << pred << std::endl;
 }

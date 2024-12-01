@@ -44,9 +44,9 @@ Tensor &Tensor::transpose(void)
 
     if (this->shape.size() == 2)
     {
-        for (size_t i = 0; i < this->shape[0]; i++)
-            for (size_t j = 0; j < this->shape[1]; j++)
-                data.push_back(this->_data[j * this->shape[0] + i]);
+        for (size_t j = 0; j < this->shape[1]; j++)
+            for (size_t i = 0; i < this->shape[0]; i++)
+                data.push_back(this->_data[i * this->shape[1] + j]);
     }
 
     size_t dim = *(this->shape.end() - 1);
