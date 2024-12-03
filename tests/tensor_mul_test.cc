@@ -5,7 +5,7 @@
 
 TEST(TensorMulTest, TensorMulInt)
 {
-    sk::Tensor t = sk::Tensor::ones({ 10, 10 });
+    sk::Tensor t = sk::tensor::ones({ 10, 10 });
 
     for (size_t i = 0; i < 10; i++)
         t *= 2;
@@ -26,7 +26,7 @@ TEST(TensorMulTest, TensorMulInt)
 
 TEST(TensorMulTest, TensorMulFloat)
 {
-    sk::Tensor t = sk::Tensor::ones({ 10, 10 });
+    sk::Tensor t = sk::tensor::ones({ 10, 10 });
 
     for (size_t i = 0; i < 10; i++)
         t *= 2.0f;
@@ -46,9 +46,9 @@ TEST(TensorMulTest, TensorMulFloat)
 
 TEST(TensorMulTest, VecMulVec)
 {
-    sk::Tensor t1 = sk::Tensor::ones({ 10 });
+    sk::Tensor t1 = sk::tensor::ones({ 10 });
     t1 *= 2;
-    sk::Tensor t2 = sk::Tensor::ones({ 10 });
+    sk::Tensor t2 = sk::tensor::ones({ 10 });
     t2 *= 3;
 
     sk::Tensor t = t1 * t2;
@@ -61,9 +61,9 @@ TEST(TensorMulTest, VecMulVec)
 
 TEST(TensorMulTest, MatrixMulMatrix)
 {
-    sk::Tensor t1 = sk::Tensor::ones({ 10, 5 });
+    sk::Tensor t1 = sk::tensor::ones({ 10, 5 });
     t1 *= 2;
-    sk::Tensor t2 = sk::Tensor::ones({ 5, 3 });
+    sk::Tensor t2 = sk::tensor::ones({ 5, 3 });
     t2 *= 3;
 
     sk::Tensor t = t1 * t2;
@@ -78,9 +78,9 @@ TEST(TensorMulTest, MatrixMulMatrix)
 
 TEST(TensorMulTest, VecMulMatrix)
 {
-    sk::Tensor t1 = sk::Tensor::ones({ 10 });
+    sk::Tensor t1 = sk::tensor::ones({ 10 });
     t1 *= 2;
-    sk::Tensor t2 = sk::Tensor::ones({ 10, 10 });
+    sk::Tensor t2 = sk::tensor::ones({ 10, 10 });
     t2 *= 3;
 
     sk::Tensor t = t1 * t2;
@@ -93,9 +93,9 @@ TEST(TensorMulTest, VecMulMatrix)
 
 TEST(TensorMulTest, MatrixMulVec)
 {
-    sk::Tensor t1 = sk::Tensor::ones({ 10, 10 });
+    sk::Tensor t1 = sk::tensor::ones({ 10, 10 });
     t1 *= 2;
-    sk::Tensor t2 = sk::Tensor::ones({ 10 });
+    sk::Tensor t2 = sk::tensor::ones({ 10 });
     t2 *= 3;
 
     sk::Tensor t = t1 * t2;
