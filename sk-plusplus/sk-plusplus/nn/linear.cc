@@ -21,7 +21,6 @@ sk::Tensor Linear::forward(sk::Tensor &input)
 
     res += this->_bias;
 
-    // return sk::tensor::argmax(res, axis=1);
     return res;
 }
 } // namespace sk::nn

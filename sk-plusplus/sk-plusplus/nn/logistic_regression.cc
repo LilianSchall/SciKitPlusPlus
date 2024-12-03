@@ -17,6 +17,7 @@ sk::Tensor LogisticRegression::forward(sk::Tensor &input)
 {
     sk::Tensor r = this->_fc.forward(input);
 
-    return this->_sigmoid.forward(r);
+    r = this->_sigmoid.forward(r);
+    return sk::tensor::argmax(r, 1);
 }
 } // namespace sk::nn

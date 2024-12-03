@@ -83,7 +83,7 @@ sk::Tensor operator+(sk::Tensor &lhs, float rhs)
         lhs._data.begin(),
         lhs._data.end(),
         res._data.begin(),
-        [rhs](int x) { return x + rhs; });
+        [rhs](float x) { return x + rhs; });
 
     return res;
 }
@@ -96,7 +96,7 @@ sk::Tensor operator+(float lhs, sk::Tensor &rhs)
         rhs._data.begin(),
         rhs._data.end(),
         res._data.begin(),
-        [lhs](int x) { return x + lhs; });
+        [lhs](float x) { return x + lhs; });
 
     return res;
 }
@@ -107,7 +107,7 @@ sk::Tensor &sk::Tensor::operator+=(float other)
         this->_data.begin(),
         this->_data.end(),
         this->_data.begin(),
-        [other](int x) { return x + other; });
+        [other](float x) { return x + other; });
 
     return *this;
 }

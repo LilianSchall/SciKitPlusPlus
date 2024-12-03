@@ -44,7 +44,7 @@ sk::Tensor operator-(sk::Tensor &lhs, float rhs)
         lhs._data.begin(),
         lhs._data.end(),
         res._data.begin(),
-        [rhs](int x) { return x - rhs; });
+        [rhs](float x) { return x - rhs; });
 
     return res;
 }
@@ -57,7 +57,7 @@ sk::Tensor operator-(float lhs, sk::Tensor &rhs)
         rhs._data.begin(),
         rhs._data.end(),
         res._data.begin(),
-        [lhs](int x) { return lhs - x; });
+        [lhs](float x) { return lhs - x; });
 
     return res;
 }
@@ -68,9 +68,14 @@ sk::Tensor &sk::Tensor::operator-=(float other)
         this->_data.begin(),
         this->_data.end(),
         this->_data.begin(),
-        [other](int x) { return x - other; });
+        [other](float x) { return x - other; });
 
     return *this;
+}
+
+sk::Tensor operator-(sk::Tensor &lhs)
+{
+    return 0.0f - lhs;
 }
 
 sk::Tensor operator-(sk::Tensor &lhs, int rhs)
@@ -80,7 +85,7 @@ sk::Tensor operator-(sk::Tensor &lhs, int rhs)
 
 sk::Tensor operator-(const int lhs, sk::Tensor &rhs)
 {
-    return rhs - static_cast<float>(lhs);
+    return static_cast<float>(lhs) - rhs;
 }
 
 sk::Tensor &sk::Tensor::operator-=(int other)

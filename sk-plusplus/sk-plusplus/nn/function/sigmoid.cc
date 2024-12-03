@@ -6,7 +6,9 @@ namespace sk::nn
 
 sk::Tensor Sigmoid::forward(sk::Tensor &input)
 {
-    sk::Tensor e = this->_e.forward(input);
+    sk::Tensor neg = -input;
+
+    sk::Tensor e = this->_e.forward(neg);
 
     e += 1;
 
