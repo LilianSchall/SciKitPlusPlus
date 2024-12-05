@@ -7,6 +7,23 @@
 #include <unordered_map>
 #include <vector>
 
+namespace sk::tensor
+{
+sk::Tensor add(const sk::Tensor &a, const sk::Tensor &b);
+void add(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
+sk::Tensor ones(std::vector<size_t> shape);
+sk::Tensor zeroes(std::vector<size_t> shape);
+sk::Tensor arange(int max, int min = 0, int step = 1);
+sk::Tensor argmax(const sk::Tensor &t, int axis = -1);
+sk::Tensor sum(const sk::Tensor &t, int axis = -1);
+sk::Tensor mean(const sk::Tensor &t, int axis = -1);
+sk::Tensor var(const sk::Tensor &t, int axis = -1);
+void pretty_print(const sk::Tensor &t, std::ostream &out = std::cout);
+
+} // namespace sk::tensor
+
+std::ostream &operator<<(std::ostream &out, const sk::Tensor &t);
+
 namespace sk
 {
 
@@ -64,6 +81,7 @@ class Tensor
         return this->_data[index];
     }
 
+    // add operators
     Tensor operator+(const Tensor &other);
     Tensor &operator+=(const Tensor &other);
 
@@ -78,6 +96,7 @@ class Tensor
     Tensor operator-(const Tensor &other);
     Tensor &operator-=(const Tensor &other);
 
+    // sub operators
     friend Tensor operator-(Tensor &lhs);
 
     friend Tensor operator-(Tensor &lhs, const float rhs);
@@ -88,6 +107,7 @@ class Tensor
     friend Tensor operator-(const int lhs, Tensor &rhs);
     Tensor &operator-=(const int other);
 
+    // mul operators
     Tensor operator*(Tensor &other);
     Tensor &operator*=(Tensor &other);
 
@@ -100,6 +120,10 @@ class Tensor
     Tensor &operator*=(const int other);
 
     Tensor hadamard_dot(const Tensor &other);
+
+    // ---- sk::tensor functions
+    friend sk::Tensor sk::tensor::add(const sk::Tensor &a, const sk::Tensor &b);
+    friend void sk::tensor::add(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
 
     friend Tensor operator==(const Tensor &lhs, const Tensor &rhs);
 
@@ -117,16 +141,3 @@ class Tensor
 };
 
 } // namespace sk
-
-namespace sk::tensor
-{
-sk::Tensor ones(std::vector<size_t> shape);
-sk::Tensor zeroes(std::vector<size_t> shape);
-sk::Tensor arange(int max, int min = 0, int step = 1);
-sk::Tensor argmax(const sk::Tensor &t, int axis = -1);
-sk::Tensor sum(const sk::Tensor &t, int axis = -1);
-void pretty_print(const sk::Tensor &t, std::ostream &out = std::cout);
-
-} // namespace sk::tensor
-
-std::ostream &operator<<(std::ostream &out, const sk::Tensor &t);
