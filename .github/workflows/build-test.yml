@@ -1,0 +1,21 @@
+name: CMake build and test pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configure CMake
+      run: make
+
+    - name: Build
+      run: cd build && cp -r ../tests/examples/ . && make && ./test
+
