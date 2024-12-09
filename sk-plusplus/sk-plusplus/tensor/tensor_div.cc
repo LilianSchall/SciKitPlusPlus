@@ -1,26 +1,25 @@
 #include "tensor.hh"
 #include <algorithm>
 #include <cassert>
+#include <cstdlib>
 #include <functional>
 
 namespace sk
 {
-// unary operator
-sk::Tensor operator-(sk::Tensor &lhs) { return 0.0f - lhs; }
 
-sk::Tensor sk::Tensor::operator-(const Tensor &other)
+sk::Tensor sk::Tensor::operator/(const Tensor &other)
 {
-    return sk::tensor::sub(*this, other);
+    return sk::tensor::div(*this, other);
 }
 
-sk::Tensor &sk::Tensor::operator-=(const Tensor &other)
+sk::Tensor &sk::Tensor::operator/=(const Tensor &other)
 {
-    sk::tensor::sub(*this, other, *this);
+    sk::tensor::div(*this, other, *this);
 
     return *this;
 }
 
-sk::Tensor operator-(sk::Tensor &lhs, float rhs)
+sk::Tensor operator/(sk::Tensor &lhs, float rhs)
 {
     sk::Tensor res = sk::tensor::zeroes(lhs.shape);
 
@@ -28,12 +27,12 @@ sk::Tensor operator-(sk::Tensor &lhs, float rhs)
         lhs._data.begin(),
         lhs._data.end(),
         res._data.begin(),
-        [rhs](float x) { return x - rhs; });
+        [rhs](float x) { return x / rhs; });
 
     return res;
 }
 
-sk::Tensor operator-(float lhs, sk::Tensor &rhs)
+sk::Tensor operator/(float lhs, sk::Tensor &rhs)
 {
     sk::Tensor res = sk::tensor::zeroes(rhs.shape);
 
@@ -41,35 +40,35 @@ sk::Tensor operator-(float lhs, sk::Tensor &rhs)
         rhs._data.begin(),
         rhs._data.end(),
         res._data.begin(),
-        [lhs](float x) { return lhs - x; });
+        [lhs](float x) { return lhs / x; });
 
     return res;
 }
 
-sk::Tensor &sk::Tensor::operator-=(float other)
+sk::Tensor &sk::Tensor::operator/=(float other)
 {
     std::transform(
         this->_data.begin(),
         this->_data.end(),
         this->_data.begin(),
-        [other](float x) { return x - other; });
+        [other](float x) { return x / other; });
 
     return *this;
 }
 
-sk::Tensor operator-(sk::Tensor &lhs, int rhs)
+sk::Tensor operator/(sk::Tensor &lhs, int rhs)
 {
-    return lhs - static_cast<float>(rhs);
+    return lhs / static_cast<float>(rhs);
 }
 
-sk::Tensor operator-(const int lhs, sk::Tensor &rhs)
+sk::Tensor operator/(const int lhs, sk::Tensor &rhs)
 {
-    return static_cast<float>(lhs) - rhs;
+    return static_cast<float>(lhs) / rhs;
 }
 
-sk::Tensor &sk::Tensor::operator-=(int other)
+sk::Tensor &sk::Tensor::operator/=(int other)
 {
-    *this -= static_cast<float>(other);
+    *this /= static_cast<float>(other);
     return *this;
 }
 } // namespace sk
@@ -77,7 +76,7 @@ sk::Tensor &sk::Tensor::operator-=(int other)
 namespace sk::tensor
 {
 
-void sub(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result)
+void div(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result)
 {
     if (a.shape == b.shape)
     {
@@ -86,7 +85,7 @@ void sub(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result)
             a._data.end(),
             b._data.begin(),
             result._data.begin(),
-            std::minus<float>{});
+            std::divides<float>{});
         return;
     }
 
@@ -100,7 +99,7 @@ void sub(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result)
                 a._data.begin() + (i + 1) * a.shape[1],
                 b._data.begin(),
                 result._data.begin() + i * result.shape[1],
-                std::minus<float>{});
+                std::divides<float>{});
         }
         return;
     }
@@ -113,17 +112,17 @@ void sub(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result)
             a._data.begin(),
             a._data.end(),
             result._data.begin(),
-            [value](float x) { return x - value; });
+            [value](float x) { return x / value; });
         return;
     }
 
-    assert(false && "Cannot broadcast tensors for substraction");
+    assert(false && "Cannot broadcast tensors for division");
 }
 
-sk::Tensor sub(const sk::Tensor &a, const sk::Tensor &b)
+sk::Tensor div(const sk::Tensor &a, const sk::Tensor &b)
 {
     sk::Tensor res = sk::tensor::zeroes(a.shape);
-    sk::tensor::sub(a, b, res);
+    sk::tensor::div(a, b, res);
 
     return res;
 }

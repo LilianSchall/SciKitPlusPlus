@@ -8,71 +8,14 @@ namespace sk
 
 sk::Tensor sk::Tensor::operator+(const Tensor &other)
 {
-    sk::Tensor res = sk::tensor::zeroes(other.shape);
-
-    if (this->shape == other.shape)
-    {
-        std::transform(
-            this->_data.begin(),
-            this->_data.end(),
-            other._data.begin(),
-            res._data.begin(),
-            std::plus<float>{});
-
-        return res;
-    }
-
-    // temporary, just to be able to broadcast row vector with matrix
-    if (this->shape[-1] == other.shape[-1] && this->shape.size() == 2 &&
-        other.shape.size() == 1)
-    {
-        for (size_t i = 0; i < this->shape[0]; i++)
-        {
-            std::transform(
-                this->_data.begin() + i * this->shape[1],
-                this->_data.begin() + (i + 1) * this->shape[1],
-                other._data.begin(),
-                res._data.begin() + i * res.shape[1],
-                std::plus<float>{});
-        }
-        return res;
-    }
-
-    assert(false && "Cannot broadcast tensors for addition");
+    return sk::tensor::add(*this, other);
 }
 
 sk::Tensor &sk::Tensor::operator+=(const Tensor &other)
 {
-    if (this->shape == other.shape)
-    {
-        std::transform(
-            this->_data.begin(),
-            this->_data.end(),
-            other._data.begin(),
-            this->_data.begin(),
-            std::plus<float>{});
+    sk::tensor::add(*this, other, *this);
 
-        return *this;
-    }
-
-    // temporary, just to be able to broadcast row vector with matrix
-    if (this->shape[-1] == other.shape[-1] && this->shape.size() == 2 &&
-        other.shape.size() == 1)
-    {
-        for (size_t i = 0; i < this->shape[0]; i++)
-        {
-            std::transform(
-                this->_data.begin() + i * this->shape[1],
-                this->_data.begin() + (i + 1) * this->shape[1],
-                other._data.begin(),
-                this->_data.begin() + i * this->shape[1],
-                std::plus<float>{});
-        }
-
-        return *this;
-    }
-
-    assert(false && "Cannot broadcast tensors for addition");
+    return *this;
 }
 
 sk::Tensor operator+(sk::Tensor &lhs, float rhs)
@@ -128,3 +71,59 @@ sk::Tensor &sk::Tensor::operator+=(int other)
     return *this;
 }
 } // namespace sk
+
+namespace sk::tensor
+{
+
+void add(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result)
+{
+    if (a.shape == b.shape)
+    {
+        std::transform(
+            a._data.begin(),
+            a._data.end(),
+            b._data.begin(),
+            result._data.begin(),
+            std::plus<float>{});
+        return;
+    }
+
+    // temporary, just to be able to broadcast row vector with matrix
+    if (a.shape.size() == 2 && b.shape.size() == 1 && a.shape[1] == b.shape[0])
+    {
+        for (size_t i = 0; i < a.shape[0]; i++)
+        {
+            std::transform(
+                a._data.begin() + i * a.shape[1],
+                a._data.begin() + (i + 1) * a.shape[1],
+                b._data.begin(),
+                result._data.begin() + i * result.shape[1],
+                std::plus<float>{});
+        }
+        return;
+    }
+
+    if (b.shape.size() == 1 && b.shape[0] == 1)
+    {
+        float value = b(0);
+
+        std::transform(
+            a._data.begin(),
+            a._data.end(),
+            result._data.begin(),
+            [value](float x) { return x + value; });
+        return;
+    }
+
+    assert(false && "Cannot broadcast tensors for addition");
+}
+
+sk::Tensor add(const sk::Tensor &a, const sk::Tensor &b)
+{
+    sk::Tensor res = sk::tensor::zeroes(a.shape);
+    sk::tensor::add(a, b, res);
+
+    return res;
+}
+
+} // namespace sk::tensor

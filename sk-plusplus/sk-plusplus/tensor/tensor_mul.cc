@@ -25,6 +25,76 @@ sk::Tensor sk::Tensor::hadamard_dot(const Tensor &other)
     return res;
 }
 
+
+sk::Tensor sk::Tensor::operator*(Tensor &other)
+{
+    return sk::tensor::mul(*this, other);
+}
+
+sk::Tensor &sk::Tensor::operator*=(Tensor &other)
+{
+    sk::tensor::mul(*this, other, *this);
+
+    return *this;
+}
+
+sk::Tensor operator*(sk::Tensor &lhs, float rhs)
+{
+    sk::Tensor res = sk::tensor::zeroes(lhs.shape);
+
+    std::transform(
+        lhs._data.begin(),
+        lhs._data.end(),
+        res._data.begin(),
+        [rhs](int x) { return x * rhs; });
+
+    return res;
+}
+
+sk::Tensor operator*(float lhs, sk::Tensor &rhs)
+{
+    sk::Tensor res = sk::tensor::zeroes(rhs.shape);
+
+    std::transform(
+        rhs._data.begin(),
+        rhs._data.end(),
+        res._data.begin(),
+        [lhs](int x) { return x * lhs; });
+
+    return res;
+}
+
+sk::Tensor &sk::Tensor::operator*=(float other)
+{
+    std::transform(
+        this->_data.begin(),
+        this->_data.end(),
+        this->_data.begin(),
+        [other](int x) { return x * other; });
+
+    return *this;
+}
+
+sk::Tensor operator*(sk::Tensor &lhs, int rhs)
+{
+    return lhs * static_cast<float>(rhs);
+}
+
+sk::Tensor operator*(const int lhs, sk::Tensor &rhs)
+{
+    return rhs * static_cast<float>(lhs);
+}
+
+sk::Tensor &sk::Tensor::operator*=(int other)
+{
+    *this *= static_cast<float>(other);
+    return *this;
+}
+} // namespace sk
+
+namespace sk::tensor
+{
+
 sk::Tensor vec_dot(const std::vector<float> &a, const std::vector<float> &b)
 {
     assert(a.size() == b.size());
@@ -101,7 +171,7 @@ sk::Tensor mat_dot(
     return c;
 }
 
-sk::Tensor matmul(Tensor &a, Tensor &b)
+sk::Tensor mul(Tensor &a, Tensor &b)
 {
     size_t dim_a = a.shape.size();
     size_t dim_b = b.shape.size();
@@ -156,79 +226,11 @@ sk::Tensor matmul(Tensor &a, Tensor &b)
     return sk::tensor::zeroes({ 1, 1 });
 }
 
-sk::Tensor sk::Tensor::operator*(Tensor &other)
+void mul(sk::Tensor &a, sk::Tensor &b, sk::Tensor &result)
 {
-    // actually the following line has no sense
-    // as we will use broadcasting
-    // assert(this->shape == other.shape);
+    sk::Tensor res = mul(a, b);
 
-    return matmul(*this, other);
+    result._data = res._data;
+    result.shape = res.shape;
 }
-
-sk::Tensor &sk::Tensor::operator*=(Tensor &other)
-{
-    // actually the following line has no sense
-    // as we will use broadcasting
-    // assert(this->shape == other.shape);
-
-    sk::Tensor res = matmul(*this, other);
-
-    this->_data = res._data;
-    this->shape = res.shape;
-
-    return *this;
-}
-
-sk::Tensor operator*(sk::Tensor &lhs, float rhs)
-{
-    sk::Tensor res = sk::tensor::zeroes(lhs.shape);
-
-    std::transform(
-        lhs._data.begin(),
-        lhs._data.end(),
-        res._data.begin(),
-        [rhs](int x) { return x * rhs; });
-
-    return res;
-}
-
-sk::Tensor operator*(float lhs, sk::Tensor &rhs)
-{
-    sk::Tensor res = sk::tensor::zeroes(rhs.shape);
-
-    std::transform(
-        rhs._data.begin(),
-        rhs._data.end(),
-        res._data.begin(),
-        [lhs](int x) { return x * lhs; });
-
-    return res;
-}
-
-sk::Tensor &sk::Tensor::operator*=(float other)
-{
-    std::transform(
-        this->_data.begin(),
-        this->_data.end(),
-        this->_data.begin(),
-        [other](int x) { return x * other; });
-
-    return *this;
-}
-
-sk::Tensor operator*(sk::Tensor &lhs, int rhs)
-{
-    return lhs * static_cast<float>(rhs);
-}
-
-sk::Tensor operator*(const int lhs, sk::Tensor &rhs)
-{
-    return rhs * static_cast<float>(lhs);
-}
-
-sk::Tensor &sk::Tensor::operator*=(int other)
-{
-    *this *= static_cast<float>(other);
-    return *this;
-}
-} // namespace sk
+} // namespace sk::tensor

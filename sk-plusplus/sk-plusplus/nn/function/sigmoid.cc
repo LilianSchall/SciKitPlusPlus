@@ -11,8 +11,7 @@ sk::Tensor Sigmoid::forward(sk::Tensor &input)
     sk::Tensor e = this->_e.forward(neg);
 
     e += 1;
-
-    e.map([](float x) { return 1 / x; });
+    e = 1 / e;
 
     return e;
 }
