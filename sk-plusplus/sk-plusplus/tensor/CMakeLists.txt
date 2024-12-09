@@ -8,4 +8,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     tensor_add.cc
     tensor_sub.cc
     tensor_mul.cc
+    tensor_mean.cc
+    tensor_var.cc
+    tensor_std.cc
 )

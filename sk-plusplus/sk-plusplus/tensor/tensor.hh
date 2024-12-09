@@ -4,20 +4,36 @@
 #include <functional>
 #include <iostream>
 #include <type_traits>
-#include <unordered_map>
 #include <vector>
+
+// Forward declaration
+namespace sk
+{
+class Tensor;
+}
 
 namespace sk::tensor
 {
 sk::Tensor add(const sk::Tensor &a, const sk::Tensor &b);
 void add(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
+
+sk::Tensor sub(const sk::Tensor &a, const sk::Tensor &b);
+void sub(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
+
+sk::Tensor mul(sk::Tensor &a, sk::Tensor &b);
+void mul(sk::Tensor &a, sk::Tensor &b, sk::Tensor &result);
+
+sk::Tensor transpose(const sk::Tensor &a);
+void transpose(const sk::Tensor &a, sk::Tensor &result);
+
 sk::Tensor ones(std::vector<size_t> shape);
 sk::Tensor zeroes(std::vector<size_t> shape);
 sk::Tensor arange(int max, int min = 0, int step = 1);
 sk::Tensor argmax(const sk::Tensor &t, int axis = -1);
 sk::Tensor sum(const sk::Tensor &t, int axis = -1);
 sk::Tensor mean(const sk::Tensor &t, int axis = -1);
-sk::Tensor var(const sk::Tensor &t, int axis = -1);
+sk::Tensor var(sk::Tensor &t, int axis = -1, int ddof = 0);
+sk::Tensor std(sk::Tensor &t, int axis = -1, int ddof = 0);
 void pretty_print(const sk::Tensor &t, std::ostream &out = std::cout);
 
 } // namespace sk::tensor
@@ -122,8 +138,24 @@ class Tensor
     Tensor hadamard_dot(const Tensor &other);
 
     // ---- sk::tensor functions
-    friend sk::Tensor sk::tensor::add(const sk::Tensor &a, const sk::Tensor &b);
-    friend void sk::tensor::add(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
+    friend Tensor sk::tensor::add(const sk::Tensor &a, const sk::Tensor &b);
+    friend void sk::tensor::add(
+        const sk::Tensor &a,
+        const sk::Tensor &b,
+        sk::Tensor &result);
+
+    friend Tensor sk::tensor::sub(const sk::Tensor &a, const sk::Tensor &b);
+    friend void sk::tensor::sub(
+        const sk::Tensor &a,
+        const sk::Tensor &b,
+        sk::Tensor &result);
+
+    friend Tensor sk::tensor::mul(sk::Tensor &a, sk::Tensor &b);
+    friend void
+    sk::tensor::mul(sk::Tensor &a, sk::Tensor &b, sk::Tensor &result);
+
+    friend sk::Tensor sk::tensor::transpose(const sk::Tensor &a);
+    friend void sk::tensor::transpose(const sk::Tensor &a, sk::Tensor &result);
 
     friend Tensor operator==(const Tensor &lhs, const Tensor &rhs);
 

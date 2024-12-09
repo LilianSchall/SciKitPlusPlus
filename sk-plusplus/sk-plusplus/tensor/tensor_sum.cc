@@ -9,7 +9,7 @@ sk::Tensor global_sum(const sk::Tensor &t)
     const std::vector<float> &data = t.as_array();
 
     const float sum =
-        std::accumulate(data.cbegin(), data.cend(), 0, std::plus<float>{});
+        std::accumulate(data.cbegin(), data.cend(), 0.0f, std::plus<float>{});
 
     return sk::Tensor{ { sum }, { 1 } };
 }

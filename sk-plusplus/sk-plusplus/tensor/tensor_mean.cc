@@ -8,9 +8,9 @@ sk::Tensor global_mean(const sk::Tensor &t)
 {
     const std::vector<float> &data = t.as_array();
 
-    const float mean =
-        std::accumulate(data.cbegin(), data.cend(), 0, std::plus<float>{}) /
-        data.size();
+    float mean =
+        std::accumulate(data.cbegin(), data.cend(), 0.0f, std::plus<float>{});
+    mean /= data.size();
 
     return sk::Tensor{ { mean }, { 1 } };
 }

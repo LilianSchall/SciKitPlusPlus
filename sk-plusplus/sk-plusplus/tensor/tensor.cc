@@ -53,28 +53,7 @@ Tensor &Tensor::map(std::function<float(float)> func)
 
 Tensor &Tensor::transpose(void)
 {
-    if (this->shape.size() > 2)
-        return *this;
-
-    std::vector<float> data;
-
-    if (this->shape.size() == 2)
-    {
-        for (size_t j = 0; j < this->shape[1]; j++)
-            for (size_t i = 0; i < this->shape[0]; i++)
-                data.push_back(this->_data[i * this->shape[1] + j]);
-    }
-
-    size_t dim = *(this->shape.end() - 1);
-    this->shape.pop_back();
-
-    this->shape.emplace(this->shape.begin(), dim);
-
-    if (this->shape.size() == 1)
-        this->shape.emplace(this->shape.begin(), 1);
-
-    this->_data = data;
-
+    sk::tensor::transpose(*this, *this);
     return *this;
 }
 
@@ -108,4 +87,43 @@ sk::Tensor arange(int max, int min, int step)
 
     return sk::Tensor{ data, { data.size() } };
 }
+
+sk::Tensor transpose(const sk::Tensor &a)
+{
+    sk::Tensor result = sk::tensor::zeroes(a.shape);
+
+    transpose(a, result);
+
+    return result;
+}
+
+void transpose(const sk::Tensor &a, sk::Tensor &result)
+{
+    if (a.shape.size() > 2)
+        return;
+
+    std::vector<float> data;
+
+    std::vector<float> a_data = a.as_array();
+
+    if (a.shape.size() == 2)
+    {
+        for (size_t j = 0; j < a.shape[1]; j++)
+            for (size_t i = 0; i < a.shape[0]; i++)
+                data.push_back(a_data[i * a.shape[1] + j]);
+    }
+
+    size_t dim = *(a.shape.end() - 1);
+    result.shape = a.shape;
+    result.shape.pop_back();
+
+
+    result.shape.emplace(result.shape.begin(), dim);
+
+    if (result.shape.size() == 1)
+        result.shape.emplace(a.shape.begin(), 1);
+
+    result._data = data;
+}
+
 } // namespace sk::tensor

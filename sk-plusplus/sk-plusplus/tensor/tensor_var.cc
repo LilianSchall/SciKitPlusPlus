@@ -1,17 +1,20 @@
 #include "tensor.hh"
-#include <numeric>
-#include <vector>
 
 namespace sk::tensor
 {
-sk::Tensor var(const sk::Tensor &t, int axis)
+sk::Tensor var(sk::Tensor &t, int axis, int ddof)
 {
     sk::Tensor tensor_mean = sk::tensor::mean(t, axis);
 
-    sk::Tensor sub = sk::tensor::sum(
-        (axis == 0 ? sk::tensor::transpose(t) : t) - tensor_mean,
-        axis);
+    sk::Tensor items = (axis == 1 ? sk::tensor::transpose(t) : t) - tensor_mean;
 
-    sk::Tensor output = sub.hadamard_dot(sub);
+    items = items.hadamard_dot(items);
+
+    sk::Tensor out = sk::tensor::sum(items,axis);
+
+    int n = (axis == -1 ? t.as_array().size() : t.shape[axis]);
+    out = out.map([ddof, n](float x){ return x / (n - ddof);});
+
+    return out;
 }
 } // namespace sk::tensor
