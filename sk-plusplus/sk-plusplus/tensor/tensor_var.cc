@@ -13,7 +13,7 @@ sk::Tensor var(sk::Tensor &t, int axis, int ddof)
     sk::Tensor out = sk::tensor::sum(items,axis);
 
     int n = (axis == -1 ? t.as_array().size() : t.shape[axis]);
-    out = out.map([ddof, n](float x){ return x / (n - ddof);});
+    out /= n - ddof;
 
     return out;
 }

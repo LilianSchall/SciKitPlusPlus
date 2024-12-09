@@ -23,6 +23,9 @@ void sub(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
 sk::Tensor mul(sk::Tensor &a, sk::Tensor &b);
 void mul(sk::Tensor &a, sk::Tensor &b, sk::Tensor &result);
 
+sk::Tensor div(const sk::Tensor &a, const sk::Tensor &b);
+void div(const sk::Tensor &a, const sk::Tensor &b, sk::Tensor &result);
+
 sk::Tensor transpose(const sk::Tensor &a);
 void transpose(const sk::Tensor &a, sk::Tensor &result);
 
@@ -137,7 +140,20 @@ class Tensor
 
     Tensor hadamard_dot(const Tensor &other);
 
+    // div operators
+    Tensor operator/(const Tensor &other);
+    Tensor &operator/=(const Tensor &other);
+
+    friend Tensor operator/(Tensor &lhs, const float rhs);
+    friend Tensor operator/(const float lhs, Tensor &rhs);
+    Tensor &operator/=(const float other);
+
+    friend Tensor operator/(Tensor &lhs, const int rhs);
+    friend Tensor operator/(const int lhs, Tensor &rhs);
+    Tensor &operator/=(const int other);
+
     // ---- sk::tensor functions
+    // ---- arithmetic operations
     friend Tensor sk::tensor::add(const sk::Tensor &a, const sk::Tensor &b);
     friend void sk::tensor::add(
         const sk::Tensor &a,
@@ -154,6 +170,13 @@ class Tensor
     friend void
     sk::tensor::mul(sk::Tensor &a, sk::Tensor &b, sk::Tensor &result);
 
+    friend Tensor sk::tensor::div(const sk::Tensor &a, const sk::Tensor &b);
+    friend void sk::tensor::div(
+        const sk::Tensor &a,
+        const sk::Tensor &b,
+        sk::Tensor &result);
+
+    // ---- structural operations
     friend sk::Tensor sk::tensor::transpose(const sk::Tensor &a);
     friend void sk::tensor::transpose(const sk::Tensor &a, sk::Tensor &result);
 
