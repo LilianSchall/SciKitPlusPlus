@@ -11,20 +11,49 @@ namespace sk
 
 sk::Tensor sk::Tensor::hadamard_dot(const Tensor &other)
 {
-    assert(this->shape == other.shape);
+    sk::Tensor res = sk::tensor::zeroes(this->shape);
 
-    sk::Tensor res = sk::tensor::zeroes(other.shape);
+    if (this->shape == other.shape)
+    {
+        std::transform(
+            this->_data.begin(),
+            this->_data.end(),
+            other._data.begin(),
+            res._data.begin(),
+            std::multiplies<float>{});
+        return res;
+    }
 
-    std::transform(
-        this->_data.begin(),
-        this->_data.end(),
-        other._data.begin(),
-        res._data.begin(),
-        std::multiplies<float>{});
+    // temporary, just to be able to broadcast row vector with matrix
+    if (this->shape.size() == 2 && other.shape.size() == 1 &&
+        this->shape[1] == other.shape[0])
+    {
+        for (size_t i = 0; i < this->shape[0]; i++)
+        {
+            std::transform(
+                this->_data.begin() + i * this->shape[1],
+                this->_data.begin() + (i + 1) * this->shape[1],
+                other._data.begin(),
+                res._data.begin() + i * res.shape[1],
+                std::multiplies<float>{});
+        }
+        return res;
+    }
 
-    return res;
+    if (other.shape.size() == 1 && other.shape[0] == 1)
+    {
+        float value = other(0);
+
+        std::transform(
+            this->_data.begin(),
+            this->_data.end(),
+            res._data.begin(),
+            [value](float x) { return x * value; });
+        return res;
+    }
+
+    assert(false && "Cannot broadcast tensors for hadamard product");
 }
-
 
 sk::Tensor sk::Tensor::operator*(Tensor &other)
 {

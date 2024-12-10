@@ -5,8 +5,11 @@ namespace sk::scaler
 {
 
 StandardScaler::StandardScaler(sk::Tensor &input) :
-    _mean(sk::tensor::mean(input, 1)), _std(sk::tensor::std(input, 1))
+    _mean(sk::tensor::mean(input, 0)), _std(sk::tensor::std(input, 0))
 {
+    assert(
+        input.shape.size() == 2 &&
+        "Expected StandardScaler input to be a 2D array");
 }
 
 sk::Tensor StandardScaler::transform(sk::Tensor &input)
