@@ -6,6 +6,8 @@ target_sources(test PRIVATE
     tensor_add_test.cc
     tensor_div_test.cc
     tensor_mean_test.cc
+    tensor_min_test.cc
+    tensor_max_test.cc
     tensor_mul_test.cc
     tensor_serializer_test.cc
     tensor_sub_test.cc
