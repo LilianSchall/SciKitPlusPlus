@@ -6,12 +6,16 @@ target_sources(test PRIVATE
     tensor_add_test.cc
     tensor_div_test.cc
     tensor_mean_test.cc
+    tensor_min_test.cc
+    tensor_max_test.cc
     tensor_mul_test.cc
     tensor_serializer_test.cc
     tensor_sub_test.cc
     tensor_sum_test.cc
     tensor_test.cc
     tensor_var_test.cc
+    standard_scaler_test.cc
+    min_max_scaler_test.cc
 )
 configure_file(examples/x.dat ${CMAKE_CURRENT_BINARY_DIR}/../examples/x.dat)
 configure_file(examples/y.dat ${CMAKE_CURRENT_BINARY_DIR}/../examples/y.dat)
