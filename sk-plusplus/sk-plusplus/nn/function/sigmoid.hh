@@ -7,7 +7,7 @@
 
 namespace sk::nn
 {
-class Sigmoid : sk::nn::Module
+class Sigmoid : public sk::nn::Module
 {
   public:
     explicit Sigmoid() = default;

@@ -2,21 +2,20 @@
 
 #include "sk-plusplus/nn/module.hh"
 #include "sk-plusplus/tensor/tensor.hh"
-#include <cstddef>
+#include <memory>
+#include <vector>
 
 namespace sk::nn
 {
-class Linear : public sk::nn::Module
+class Sequential : public sk::nn::Module
 {
   public:
-    explicit Linear(sk::Tensor weights, sk::Tensor bias);
-    explicit Linear(size_t input_size, size_t output_size);
+    explicit Sequential(std::vector<std::shared_ptr<sk::nn::Module>> &layers);
 
     sk::Tensor forward(sk::Tensor &input) override;
     // sk::Tensor backward(sk::Tensor &input) override;
 
   private:
-    sk::Tensor _weights;
-    sk::Tensor _bias;
+    std::vector<std::shared_ptr<sk::nn::Module>> _layers;
 };
 } // namespace sk::nn

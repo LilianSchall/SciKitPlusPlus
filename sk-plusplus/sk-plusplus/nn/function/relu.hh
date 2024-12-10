@@ -2,21 +2,20 @@
 
 #include "sk-plusplus/nn/module.hh"
 #include "sk-plusplus/tensor/tensor.hh"
-#include <cstddef>
+
+#include "exp.hh"
 
 namespace sk::nn
 {
-class Linear : public sk::nn::Module
+class Relu : public sk::nn::Module
 {
   public:
-    explicit Linear(sk::Tensor weights, sk::Tensor bias);
-    explicit Linear(size_t input_size, size_t output_size);
+    explicit Relu() = default;
 
     sk::Tensor forward(sk::Tensor &input) override;
     // sk::Tensor backward(sk::Tensor &input) override;
 
   private:
-    sk::Tensor _weights;
-    sk::Tensor _bias;
+    Exp _e;
 };
 } // namespace sk::nn

@@ -6,7 +6,7 @@
 
 namespace sk::nn
 {
-class Exp : sk::nn::Module
+class Exp : public sk::nn::Module
 {
   public:
     explicit Exp() = default;
