@@ -19,5 +19,5 @@ jobs:
       run: make
 
     - name: Build
-      run: cd build && cp -r ../tests/examples/ . && make && ./test
+      run: cd build && make -j4 && ./test
 
