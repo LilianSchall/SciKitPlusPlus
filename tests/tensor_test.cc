@@ -91,3 +91,30 @@ TEST(TensorTest, TensorArgMax)
     for (size_t i = 0; i < amax2.shape[0]; i++)
         EXPECT_EQ(amax2(i), 3);
 }
+
+TEST(TensorTest, TensorArgMin)
+{
+    sk::Tensor t = sk::tensor::arange(20).reshape({4, 5});
+
+    sk::Tensor coeff_amin = sk::tensor::argmin(t);
+
+    sk::Tensor amin1 = sk::tensor::argmin(t, 1);
+    sk::Tensor amin2 = sk::tensor::argmin(t, 0);
+
+    EXPECT_EQ(coeff_amin.shape.size(), 1);
+    EXPECT_EQ(coeff_amin.shape[0], 1);
+    EXPECT_EQ(coeff_amin(0), 0);
+
+
+    EXPECT_EQ(amin1.shape.size(), 1);
+    EXPECT_EQ(amin1.shape[0], 4);
+
+    for (size_t i = 0; i < amin1.shape[0]; i++)
+        EXPECT_EQ(amin1(i), 0);
+
+    EXPECT_EQ(amin2.shape.size(), 1);
+    EXPECT_EQ(amin2.shape[0], 5);
+
+    for (size_t i = 0; i < amin2.shape[0]; i++)
+        EXPECT_EQ(amin2(i), 0);
+}
