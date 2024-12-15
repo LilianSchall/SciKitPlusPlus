@@ -12,9 +12,9 @@ TEST(MnistTest, DatasetTest)
 {
     sk::serializer::TensorSerializer serializer;
 
-    sk::Tensor X = serializer.deserialize("examples/x_mnist.dat");
+    sk::Tensor X = serializer.deserialize("examples/mnist_x.dat");
     X /= 255.0f;
-    sk::Tensor y = serializer.deserialize("examples/y_mnist.dat");
+    sk::Tensor y = serializer.deserialize("examples/mnist_y.dat");
 
     sk::Tensor w1 = serializer.deserialize("examples/mnist_w1.dat");
     sk::Tensor w2 = serializer.deserialize("examples/mnist_w2.dat");
