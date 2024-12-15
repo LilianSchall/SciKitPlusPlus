@@ -3,23 +3,23 @@
 
 namespace sk::tensor
 {
-sk::Tensor global_argmax(const sk::Tensor &t)
+sk::Tensor global_argmin(const sk::Tensor &t)
 {
     const std::vector<float> &data = t.as_array();
     size_t best_index = 0;
     for (size_t i = 0; i < data.size(); i++)
     {
-        if (data[best_index] < data[i])
+        if (data[best_index] > data[i])
             best_index = i;
     }
 
     return sk::Tensor{ { static_cast<float>(best_index) }, { 1 } };
 }
 
-sk::Tensor argmax(const sk::Tensor &t, int axis)
+sk::Tensor argmin(const sk::Tensor &t, int axis)
 {
     if (axis == -1 || (axis == 0 && t.shape.size() == 1))
-        return global_argmax(t);
+        return global_argmin(t);
 
     assert(
         static_cast<size_t>(axis) < t.shape.size() &&
@@ -35,8 +35,8 @@ sk::Tensor argmax(const sk::Tensor &t, int axis)
         size_t best_index = 0;
         for (size_t j = 0; j < second_limit; j++)
         {
-            if ((axis == 1 && t(i, j) > t(i, best_index)) ||
-                (axis == 0 && t(j, i) > t(best_index, j)))
+            if ((axis == 1 && t(i, j) < t(i, best_index)) ||
+                (axis == 0 && t(j, i) < t(best_index, j)))
                 best_index = j;
         }
 

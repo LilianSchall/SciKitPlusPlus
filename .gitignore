@@ -1,4 +1,6 @@
 *.cache/
+*examples
+*.npz
 # Prerequisites
 *.d
 

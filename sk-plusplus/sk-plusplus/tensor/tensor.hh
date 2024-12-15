@@ -33,11 +33,14 @@ sk::Tensor ones(std::vector<size_t> shape);
 sk::Tensor zeroes(std::vector<size_t> shape);
 sk::Tensor arange(int max, int min = 0, int step = 1);
 sk::Tensor argmax(const sk::Tensor &t, int axis = -1);
+sk::Tensor argmin(const sk::Tensor &t, int axis = -1);
 sk::Tensor sum(const sk::Tensor &t, int axis = -1);
 sk::Tensor mean(const sk::Tensor &t, int axis = -1);
 sk::Tensor min(const sk::Tensor &t, int axis = -1);
 sk::Tensor max(const sk::Tensor &t, int axis = -1);
+std::vector<sk::Tensor> split(const sk::Tensor &t, int axis = -1);
 sk::Tensor var(sk::Tensor &t, int axis = -1, int ddof = 0);
+sk::Tensor sqrt(const sk::Tensor &t);
 sk::Tensor std(sk::Tensor &t, int axis = -1, int ddof = 0);
 void pretty_print(const sk::Tensor &t, std::ostream &out = std::cout);
 

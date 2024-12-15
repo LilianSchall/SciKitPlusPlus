@@ -9,19 +9,19 @@ TEST(LogisticRegressionTest, LoadModel)
 
     sk::serializer::TensorSerializer serializer;
 
-    sk::Tensor X = serializer.deserialize("examples/x.dat");
+    sk::Tensor X = serializer.deserialize("examples/iris_x.dat");
 
     EXPECT_EQ(X.shape.size(), 2);
     EXPECT_EQ(X.shape[0], 150);
     EXPECT_EQ(X.shape[1], 4);
 
-    sk::Tensor y = serializer.deserialize("examples/y.dat");
+    sk::Tensor y = serializer.deserialize("examples/iris_y.dat");
 
     EXPECT_EQ(y.shape.size(), 1);
     EXPECT_EQ(y.shape[0], 150);
 
 
-    sk::Tensor w = serializer.deserialize("examples/weights.dat");
+    sk::Tensor w = serializer.deserialize("examples/lr_w.dat");
 
     EXPECT_EQ(w.shape.size(), 2);
     EXPECT_EQ(w.shape[0], 3);
@@ -33,7 +33,7 @@ TEST(LogisticRegressionTest, LoadModel)
     EXPECT_EQ(w.shape[0], 4);
     EXPECT_EQ(w.shape[1], 3);
 
-    sk::Tensor b = serializer.deserialize("examples/biases.dat");
+    sk::Tensor b = serializer.deserialize("examples/lr_b.dat");
 
     EXPECT_EQ(b.shape.size(), 1);
     EXPECT_EQ(b.shape[0], 3);

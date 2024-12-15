@@ -16,11 +16,11 @@ TEST(MnistTest, DatasetTest)
     X /= 255.0f;
     sk::Tensor y = serializer.deserialize("examples/y_mnist.dat");
 
-    sk::Tensor w1 = serializer.deserialize("examples/w1.dat");
-    sk::Tensor w2 = serializer.deserialize("examples/w2.dat");
+    sk::Tensor w1 = serializer.deserialize("examples/mnist_w1.dat");
+    sk::Tensor w2 = serializer.deserialize("examples/mnist_w2.dat");
 
-    sk::Tensor b1 = serializer.deserialize("examples/b1.dat");
-    sk::Tensor b2 = serializer.deserialize("examples/b2.dat");
+    sk::Tensor b1 = serializer.deserialize("examples/mnist_b1.dat");
+    sk::Tensor b2 = serializer.deserialize("examples/mnist_b2.dat");
 
     EXPECT_EQ(X.shape[0], 60000);
     EXPECT_EQ(X.shape[1], 784);
@@ -32,15 +32,15 @@ TEST(MnistTest, AccuracyTest)
 {
     sk::serializer::TensorSerializer serializer;
 
-    sk::Tensor X = serializer.deserialize("examples/x_mnist.dat");
+    sk::Tensor X = serializer.deserialize("examples/mnist_x.dat");
     X /= 255.0f;
-    sk::Tensor y = serializer.deserialize("examples/y_mnist.dat");
+    sk::Tensor y = serializer.deserialize("examples/mnist_y.dat");
 
-    sk::Tensor w1 = serializer.deserialize("examples/w1.dat");
-    sk::Tensor w2 = serializer.deserialize("examples/w2.dat");
+    sk::Tensor w1 = serializer.deserialize("examples/mnist_w1.dat");
+    sk::Tensor w2 = serializer.deserialize("examples/mnist_w2.dat");
 
-    sk::Tensor b1 = serializer.deserialize("examples/b1.dat");
-    sk::Tensor b2 = serializer.deserialize("examples/b2.dat");
+    sk::Tensor b1 = serializer.deserialize("examples/mnist_b1.dat");
+    sk::Tensor b2 = serializer.deserialize("examples/mnist_b2.dat");
 
     std::vector<std::shared_ptr<sk::nn::Module>> layers{};
     layers.push_back(std::make_shared<sk::nn::Linear>(w1, b1));
