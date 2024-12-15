@@ -121,7 +121,7 @@ void transpose(const sk::Tensor &a, sk::Tensor &result)
     result.shape.emplace(result.shape.begin(), dim);
 
     if (result.shape.size() == 1)
-        result.shape.emplace(a.shape.begin(), 1);
+        result.shape.emplace(a.shape.end(), 1);
 
     result._data = data;
 }

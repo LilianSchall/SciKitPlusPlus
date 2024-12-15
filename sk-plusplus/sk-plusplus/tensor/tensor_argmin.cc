@@ -36,7 +36,7 @@ sk::Tensor argmin(const sk::Tensor &t, int axis)
         for (size_t j = 0; j < second_limit; j++)
         {
             if ((axis == 1 && t(i, j) < t(i, best_index)) ||
-                (axis == 0 && t(j, i) < t(best_index, j)))
+                (axis == 0 && t(j, i) < t(best_index, i)))
                 best_index = j;
         }
 
