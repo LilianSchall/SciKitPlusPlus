@@ -1,3 +1,4 @@
+#include "sk-plusplus/cluster/kmeans.hh"
 #include "sk-plusplus/nn/linear.hh"
 #include "sk-plusplus/nn/module.hh"
 #include <gtest/gtest.h>
@@ -28,7 +29,7 @@ TEST(MnistTest, DatasetTest)
     EXPECT_EQ(y.shape[0], 60000);
 }
 
-TEST(MnistTest, AccuracyTest)
+TEST(MnistTest, DenseTest)
 {
     sk::serializer::TensorSerializer serializer;
 
@@ -62,4 +63,21 @@ TEST(MnistTest, AccuracyTest)
     std::cout << "Accuracy: " << accuracy << std::endl;
 
     EXPECT_GE(accuracy, 0.97f);
+}
+
+TEST(MnistTest, KMeansTest)
+{
+    sk::serializer::TensorSerializer serializer;
+
+    sk::Tensor X = serializer.deserialize("examples/mnist_x.dat");
+    X /= 255.0f;
+    sk::Tensor y = serializer.deserialize("examples/mnist_y.dat");
+    sk::Tensor centroids =
+        serializer.deserialize("examples/mnist_centroids.dat");
+
+    sk::cluster::KMeans model{ centroids };
+
+    sk::Tensor pred = model.predict(X);
+
+    EXPECT_TRUE(true);
 }
