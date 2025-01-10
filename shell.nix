@@ -10,8 +10,10 @@ pkgs.mkShell {
       m4 utillinux
       pngpp procps tbb unzip
       openblas
+      SDL2
+      SDL2_ttf
   ];
-  shellHook = with pkgs; ''
+  shellHook = ''
     #export EXTRA_CCFLAGS="-I/usr/include $EXTRA_CCFLAGS"
   '';
 }

@@ -4,4 +4,6 @@ target_sources(${PROJECT_NAME} PRIVATE
     exp.cc
     sigmoid.cc
     relu.cc
+    flatten.cc
+    softmax.cc
 )

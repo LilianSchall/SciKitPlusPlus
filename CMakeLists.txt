@@ -64,3 +64,12 @@ add_subdirectory(tests/)
 target_compile_options(test PRIVATE -Wall -Wextra -Werror -pedantic -g)
 target_include_directories(test PUBLIC tests/)
 target_link_libraries(test PRIVATE ${PROJECT_NAME} GTest::gtest GTest::gtest_main)
+
+add_executable(mnist)
+add_subdirectory(mnist_draw/)
+
+target_compile_options(mnist PRIVATE -Wall -Wextra -Werror -pedantic -g)
+target_include_directories(mnist PUBLIC mnist_draw/)
+
+find_package(SDL2 REQUIRED)
+target_link_libraries(mnist PRIVATE ${PROJECT_NAME} ${SDL2_LIBRARIES} SDL2_ttf)
